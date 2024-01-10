@@ -15,6 +15,6 @@ class OpticalSurface(
 
     companion object {
         fun makePlanarRefractor(plane: Plane, refractionIndex: Float) = OpticalSurface(plane, refractionIndex)
-        fun makeTransparentPlane(plane: Plane) = makePlanarRefractor(plane, 0f)
+        fun makeTransparentPlane(plane: Plane) = makePlanarRefractor(plane, 1f)
     }
 }
