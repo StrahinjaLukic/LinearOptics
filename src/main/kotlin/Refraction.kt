@@ -1,14 +1,14 @@
 package src.main.kotlin
 
+import src.main.kotlin.geometry.CartesianProduct
+import src.main.kotlin.geometry.VectorNorm
 import kotlin.math.pow
 import kotlin.math.sign
 import kotlin.math.sqrt
 
 class Refraction : (CartesianVector, CartesianVector, Float) -> CartesianVector {
     override operator fun invoke(
-        directionBefore: CartesianVector,
-        surfaceNormal: CartesianVector,
-        refractionIndex: Float
+        directionBefore: CartesianVector, surfaceNormal: CartesianVector, refractionIndex: Float
     ): CartesianVector {
         val vectorNorm = VectorNorm()
 
@@ -24,5 +24,9 @@ class Refraction : (CartesianVector, CartesianVector, Float) -> CartesianVector 
         val tangential: CartesianVector = directionBefore - perpendicular
 
         return perpendicular * cosineAfter / mutualCosine + tangential * sineAfter / sineBefore
+    }
+
+    companion object {
+        val instance = Refraction()
     }
 }

@@ -1,6 +1,6 @@
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import src.main.kotlin.*
+import src.main.kotlin.geometry.CartesianProduct
 import kotlin.math.sqrt
 import kotlin.math.pow
 

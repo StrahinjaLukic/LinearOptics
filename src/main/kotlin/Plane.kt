@@ -1,8 +1,12 @@
 package src.main.kotlin
 
+import src.main.kotlin.geometry.CartesianProduct
+import src.main.kotlin.geometry.ClosestDistance
+import src.main.kotlin.geometry.VectorNorm
+
 class Plane(
-    private val planePoint: CartesianVector,
-    planeNormal: CartesianVector) : Surface {
+    val planePoint: CartesianVector, planeNormal: CartesianVector
+) : Surface {
     val normal = planeNormal / VectorNorm()(planeNormal)
 
     override fun intersection(ray: Ray): LocalSurfaceNormal?

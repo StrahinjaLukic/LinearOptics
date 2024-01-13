@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
+import src.main.kotlin.geometry.CartesianProduct
+import src.main.kotlin.geometry.VectorNorm
 import java.util.stream.Stream
 
 class PlaneTest {
