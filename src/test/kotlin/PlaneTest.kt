@@ -21,13 +21,13 @@ class PlaneTest {
 
     @ParameterizedTest
     @MethodSource("directionProvider")
-    fun `Simple ray intersection`(rayDirection: CartesianVector) {
+    fun `Simple ray intersection point`(rayDirection: CartesianVector) {
         val ez = CartesianVector(0f, 0f, 1f)
         val plane = Plane(CartesianVector(0f, 0f, 0f), ez)
         val ray = Ray(CartesianVector(0f, 0f, -1f), rayDirection)
-        val planeIntersection = plane.intersection(ray)
-        assertNotNull(planeIntersection)
-        assertEquals(CartesianVector(rayDirection.x, rayDirection.y, 0f), planeIntersection?.point)
+        val planeIntersectionPoint = plane.intersectionPoint(ray)
+        assertNotNull(planeIntersectionPoint)
+        assertEquals(CartesianVector(rayDirection.x, rayDirection.y, 0f), planeIntersectionPoint)
     }
 
     companion object {
