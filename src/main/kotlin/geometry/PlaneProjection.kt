@@ -3,7 +3,7 @@ package src.main.kotlin.geometry
 import src.main.kotlin.*
 import kotlin.math.abs
 
-class ClosestDistance {
+class PlaneProjection {
     companion object {
         fun pointToPlaneSigned(point: CartesianVector, plane: Plane): Float {
             val displacement = plane.planePoint - point

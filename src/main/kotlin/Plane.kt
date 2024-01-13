@@ -1,7 +1,7 @@
 package src.main.kotlin
 
 import src.main.kotlin.geometry.CartesianProduct
-import src.main.kotlin.geometry.ClosestDistance
+import src.main.kotlin.geometry.PlaneProjection
 import src.main.kotlin.geometry.VectorNorm
 
 class Plane(
@@ -10,7 +10,7 @@ class Plane(
     val normal = planeNormal / VectorNorm()(planeNormal)
 
     override fun surfaceNormal(point: CartesianVector): CartesianVector {
-        val distance = ClosestDistance.pointToPlaneAbs(point, this)
+        val distance = PlaneProjection.pointToPlaneAbs(point, this)
         require(distance < 1e-6) { "Point is not on the plane. It is $distance away" }
         return normal
     }
