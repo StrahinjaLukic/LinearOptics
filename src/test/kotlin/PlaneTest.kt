@@ -33,14 +33,9 @@ class PlaneTest {
     companion object {
         @JvmStatic
         private fun directionProvider(): Stream<CartesianVector> {
-            return Stream.of(
-                CartesianVector(0f, 0f, 1f),
-                CartesianVector(1f, 1f, 1f),
-                CartesianVector(1f, 2f, 1f),
-                CartesianVector(2f, 1f, 1f),
-                CartesianVector(0f, 1f, 1f),
-                CartesianVector(1f, 0f, 1f)
-            )
+            val steps = listOf(-2f, -1f, 0f, 1f, 2f)
+            val origins = steps.map { x: Float -> steps.map { CartesianVector(x, it, 1f) } }.flatten()
+            return origins.stream()
         }
     }
 }
