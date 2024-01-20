@@ -5,7 +5,9 @@ import org.junit.jupiter.params.provider.MethodSource
 import src.main.kotlin.CartesianVector
 import src.main.kotlin.Ray
 import src.main.kotlin.SphericalSection
+import src.main.kotlin.geometry.Angle
 import src.main.kotlin.geometry.Distance
+import src.main.kotlin.minus
 import java.util.stream.Stream
 
 class SphericalSectionTest {
@@ -25,6 +27,8 @@ class SphericalSectionTest {
         assertEquals(rayOrigin.x, rayIntersection?.point?.x)
         assertEquals(rayOrigin.y, rayIntersection?.point?.y)
         assertEquals(sphereRadius, Distance.scalar(sphereCenter, rayIntersection!!.point))
+
+        assertEquals(1f, Angle.cosine(rayIntersection.direction, rayIntersection.point - sphereCenter))
     }
 
     companion object {
