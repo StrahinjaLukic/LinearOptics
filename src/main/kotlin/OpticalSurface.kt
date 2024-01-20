@@ -9,7 +9,7 @@ class OpticalSurface(
         val intersection = surface.intersection(ray) ?: return ray
         return Ray(
             intersection.point,
-            Refraction()(ray.direction, intersection.direction, refractionIndex)
+            Refraction.instance(ray.direction, intersection.direction, refractionIndex)
         )
     }
 

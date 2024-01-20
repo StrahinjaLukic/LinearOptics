@@ -7,7 +7,7 @@ class PlaneProjection {
     companion object {
         fun pointToPlaneSigned(point: CartesianVector, plane: Plane): Float {
             val displacement = plane.planePoint - point
-            return CartesianProduct()(plane.normal, displacement)
+            return CartesianProduct.instance(plane.normal, displacement)
         }
 
         fun pointToPlaneAbs(point: CartesianVector, plane: Plane): Float {

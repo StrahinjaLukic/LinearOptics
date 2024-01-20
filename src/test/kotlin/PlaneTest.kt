@@ -15,8 +15,15 @@ class PlaneTest {
     fun `Plane norm is normalized`() {
         val directionVector = CartesianVector(10f, 10f, 10f)
         val plane = Plane(CartesianVector(0f, 0f, 0f), directionVector)
-        assert(abs(VectorNorm()(plane.normal) - 1) < 1e-6)
-        assert(abs(CartesianProduct()(plane.normal, directionVector) / VectorNorm()(directionVector) - 1) < 1e-6)
+        assert(abs(VectorNorm.instance(plane.normal) - 1) < 1e-6)
+        assert(
+            abs(
+                CartesianProduct.instance(
+                    plane.normal,
+                    directionVector
+                ) / VectorNorm.instance(directionVector) - 1
+            ) < 1e-6
+        )
     }
 
     @ParameterizedTest

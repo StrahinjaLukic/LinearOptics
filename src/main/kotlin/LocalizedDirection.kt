@@ -13,7 +13,7 @@ data class LocalizedDirection(val point: CartesianVector, private var directionV
     val direction get() = directionVector
 
     init {
-        directionVector /= VectorNorm()(directionVector)
+        directionVector /= VectorNorm.instance(directionVector)
     }
 }
 

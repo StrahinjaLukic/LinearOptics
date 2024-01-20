@@ -35,7 +35,8 @@ class SphericalSection(
 
     override fun intersectionPoint(ray: Ray): CartesianVector? {
         val displacementToCenter = Distance.vector(ray.point, centerPoint)
-        val displacementToCenterAlongRay = ray.direction * CartesianProduct()(ray.direction, displacementToCenter)
+        val displacementToCenterAlongRay =
+            ray.direction * CartesianProduct.instance(ray.direction, displacementToCenter)
         val closestApproach = Distance.scalar(displacementToCenterAlongRay, displacementToCenter)
 
         if (closestApproach > radius) return null // Ray misses the sphere
@@ -58,15 +59,18 @@ class SphericalSection(
 
         // Ray parallel to the section plane or angled outwards from the center.
 
-        if (approachCosine < sectionRadius / radius)
-        { // May have two intersections with the spherical section. Try negative first. If ahead, it is the closer solution.
+        if (approachCosine < sectionRadius / radius) { // May have two intersections with the spherical section. Try negative first. If ahead, it is the closer solution.
             val rayToSurfaceVector = displacementToCenterAlongRay - ray.direction * distanceSurfaceToClosestAlongRay
 
             if (CartesianProduct.instance(ray.direction, rayToSurfaceVector) >= 0) // Surface is ahead.
             {
                 val intersectionPoint = ray.point + rayToSurfaceVector
                 // Check if inside the section
-                if (RayProjection.projectionDistance(intersectionPoint, sectionAxisRay) <= sectionRadius) return intersectionPoint
+                if (RayProjection.projectionDistance(
+                        intersectionPoint,
+                        sectionAxisRay
+                    ) <= sectionRadius
+                ) return intersectionPoint
             }
         }
 

@@ -4,7 +4,7 @@ import src.main.kotlin.CartesianVector
 import kotlin.math.sqrt
 
 class VectorNorm : (CartesianVector) -> Float {
-    override operator fun invoke(x: CartesianVector): Float = sqrt(CartesianProduct()(x, x))
+    override operator fun invoke(x: CartesianVector): Float = sqrt(CartesianProduct.instance(x, x))
 
     companion object {
         val instance = VectorNorm()

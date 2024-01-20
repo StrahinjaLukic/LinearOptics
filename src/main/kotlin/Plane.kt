@@ -7,7 +7,7 @@ import src.main.kotlin.geometry.VectorNorm
 class Plane(
     val planePoint: CartesianVector, planeNormal: CartesianVector
 ) : Surface {
-    val normal = planeNormal / VectorNorm()(planeNormal)
+    val normal = planeNormal / VectorNorm.instance(planeNormal)
 
     override fun surfaceNormal(point: CartesianVector): CartesianVector {
         val distance = PlaneProjection.pointToPlaneAbs(point, this)
@@ -17,11 +17,11 @@ class Plane(
 
     override fun intersectionPoint(ray: Ray): CartesianVector? {
         val delta: CartesianVector = planePoint - ray.point
-        val perpendicularDistance: Float = CartesianProduct()(normal, delta)
+        val perpendicularDistance: Float = CartesianProduct.instance(normal, delta)
         if (perpendicularDistance == 0f) return ray.point
 
         val perpendicularDisplacement: CartesianVector = normal * perpendicularDistance
-        val perpendicularProjection: Float = CartesianProduct()(perpendicularDisplacement, ray.direction)
+        val perpendicularProjection: Float = CartesianProduct.instance(perpendicularDisplacement, ray.direction)
 
         if (perpendicularProjection == 0f) return null
 
