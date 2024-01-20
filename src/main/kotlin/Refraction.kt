@@ -1,5 +1,6 @@
 package src.main.kotlin
 
+import src.main.kotlin.geometry.Angle
 import src.main.kotlin.geometry.CartesianProduct
 import src.main.kotlin.geometry.VectorNorm
 import kotlin.math.pow
@@ -10,10 +11,7 @@ class Refraction : (CartesianVector, CartesianVector, Float) -> CartesianVector 
     override operator fun invoke(
         directionBefore: CartesianVector, surfaceNormal: CartesianVector, refractionIndex: Float
     ): CartesianVector {
-        val vectorNorm = VectorNorm()
-
-        val mutualCosine: Float =
-            CartesianProduct()(surfaceNormal, directionBefore) / vectorNorm(surfaceNormal) / vectorNorm(directionBefore)
+        val mutualCosine: Float = Angle.cosine(surfaceNormal, directionBefore)
         val isInbound: Boolean = mutualCosine < 0
         val sineBefore = sqrt(1f - mutualCosine.pow(2))
         val sineAfter = if (isInbound) sineBefore / refractionIndex else sineBefore * refractionIndex

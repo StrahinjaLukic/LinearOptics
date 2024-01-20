@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import src.main.kotlin.*
+import src.main.kotlin.geometry.Angle
 import src.main.kotlin.geometry.CartesianProduct
 import java.util.stream.Stream
 import kotlin.math.sqrt
@@ -16,10 +17,10 @@ class PlanarRefractorTest {
         val refractor =
             OpticalSurface.makePlanarRefractor(Plane(CartesianVector(0f, 0f, 0f), planeDirection), refractionIndex)
 
-        val cosineBefore = CartesianProduct()(ray.direction, planeDirection)
+        val cosineBefore = Angle.cosine(ray.direction, planeDirection)
         val sineBefore = sqrt(1f - cosineBefore.pow(2))
         val directionAfter = refractor(ray).direction
-        val cosineAfter = CartesianProduct()(directionAfter, planeDirection)
+        val cosineAfter = Angle.cosine(directionAfter, planeDirection)
         val sineAfter = sqrt(1f - cosineAfter.pow(2))
         assert(
             (refractionIndex - sineBefore / sineAfter) / refractionIndex < 1e-6
