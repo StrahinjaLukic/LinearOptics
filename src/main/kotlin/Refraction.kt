@@ -14,6 +14,10 @@ class Refraction : (CartesianVector, CartesianVector, Float) -> CartesianVector 
         val mutualCosine: Float = Angle.cosine(surfaceNormal, directionBefore)
         val isInbound: Boolean = mutualCosine < 0
         val sineBefore = sqrt(1f - mutualCosine.pow(2))
+        if (sineBefore == 0f)
+        { // Incident ray is normal to the surface
+            return directionBefore
+        }
         val sineAfter = if (isInbound) sineBefore / refractionIndex else sineBefore * refractionIndex
         val cosineSign = sign(mutualCosine)
         val cosineAfter = sqrt(1f - sineAfter.pow(2)) * cosineSign
