@@ -8,5 +8,6 @@ class VectorNorm : (CartesianVector) -> Float {
 
     companion object {
         val instance = VectorNorm()
+        fun isNormed(vector: CartesianVector) = instance(vector) == 1f
     }
 }
