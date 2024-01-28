@@ -50,5 +50,42 @@ class OpticalSystem(private val opticalElements: List<OpticalElement>) : Optical
                 )
             )
         }
+
+        fun biconvexLensArray(
+            axis: CartesianVector,
+            sectionRadius: Float,
+            firstCenter: CartesianVector,
+            distances: List<Float>,
+            surfaceRadii: List<Float>,
+            refractionIndices: List<Float>
+        ): OpticalSystem {
+            require(distances.size == surfaceRadii.size - 1)
+            require(refractionIndices.size == surfaceRadii.size)
+
+            val lenses = mutableListOf(
+                biconvexLens(
+                    firstCenter,
+                    axis,
+                    surfaceRadii[0],
+                    surfaceRadii[0],
+                    sectionRadius,
+                    refractionIndices[0]
+                )
+            )
+            distances.forEachIndexed { index, distance ->
+                lenses.add(
+                    biconvexLens(
+                        firstCenter - axis * distance,
+                        axis,
+                        surfaceRadii[index + 1],
+                        surfaceRadii[index + 1],
+                        sectionRadius,
+                        refractionIndices[index + 1]
+                    )
+                )
+            }
+
+            return OpticalSystem(lenses)
+        }
     }
 }
