@@ -4,12 +4,11 @@ import src.main.kotlin.geometry.VectorNorm
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class Lens(val opticalSurfaces: List<OpticalSurface>) {
+class OpticalSystem(private val opticalElements: List<OpticalElement>) : OpticalElement {
 
-    fun propagate(ray: Ray) : Ray
-    {
+    override operator fun invoke(ray: Ray): Ray {
         var rayOut = ray
-        opticalSurfaces.forEach{rayOut = it(rayOut)}
+        opticalElements.forEach { rayOut = it(rayOut) }
         return rayOut
     }
 
@@ -28,14 +27,14 @@ class Lens(val opticalSurfaces: List<OpticalSurface>) {
          * @param sectionRadius The common sectionRadius of both spherical sections.
          * @param refractionIndex
          */
-        fun biconvex(
+        fun biconvexLens(
             centerPoint: CartesianVector,
             axis: CartesianVector,
             radiusForward: Float,
             radiusBackward: Float,
             sectionRadius: Float,
             refractionIndex: Float
-        ): Lens {
+        ): OpticalSystem {
             require(VectorNorm.isNormed(axis))
 
             val dForward = sqrt(radiusForward.pow(2) - sectionRadius.pow(2))
@@ -44,7 +43,7 @@ class Lens(val opticalSurfaces: List<OpticalSurface>) {
             val sectionForward = SphericalSection(centerPoint - axis * dForward, radiusForward, axis, sectionRadius)
             val sectionBackward = SphericalSection(centerPoint + axis * dBackward, radiusBackward, -axis, sectionRadius)
 
-            return Lens(
+            return OpticalSystem(
                 listOf(
                     OpticalSurface.makeSphericalRefractor(sectionForward, refractionIndex),
                     OpticalSurface.makeSphericalRefractor(sectionBackward, refractionIndex)
