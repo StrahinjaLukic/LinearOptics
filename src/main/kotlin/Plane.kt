@@ -1,5 +1,6 @@
 package src.main.kotlin
 
+import src.main.kotlin.geometry.Angle
 import src.main.kotlin.geometry.CartesianProduct
 import src.main.kotlin.geometry.PlaneProjection
 import src.main.kotlin.geometry.VectorNorm
@@ -16,15 +17,14 @@ class Plane(
     }
 
     override fun intersectionPoint(ray: Ray): CartesianVector? {
-        val delta: CartesianVector = planePoint - ray.point
-        val perpendicularDistance: Float = CartesianProduct.instance(normal, delta)
+        val perpendicularDistance = PlaneProjection.pointToPlaneAbs(ray.point, this)
         if (perpendicularDistance == 0f) return ray.point
 
-        val perpendicularDisplacement: CartesianVector = normal * perpendicularDistance
-        val perpendicularProjection: Float = CartesianProduct.instance(perpendicularDisplacement, ray.direction)
+        val perpendicularDisplacement: CartesianVector = PlaneProjection.pointToPlaneVector(ray.point, this)
+        val cosineToPerpendicular = Angle.cosine(ray.direction, perpendicularDisplacement)
 
-        if (perpendicularProjection == 0f) return null
+        if (cosineToPerpendicular == 0f) return null
 
-        return ray.point + ray.direction / perpendicularProjection
+        return ray.point + ray.direction * perpendicularDistance / cosineToPerpendicular
     }
 }
